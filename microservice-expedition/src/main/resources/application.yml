@@ -5,3 +5,5 @@ spring:
     config:
       uri: http://localhost:9101
       label: main
+  config:
+    import: configserver:http://localhost:9101
