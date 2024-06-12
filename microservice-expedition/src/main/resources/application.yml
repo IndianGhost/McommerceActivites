@@ -1,19 +1,9 @@
 spring:
   application:
-    name: mexpedition
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-      enabled: true
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ""
-
-server:
-  port: 9006
+    name: microservice-expedition
+  cloud:
+    config:
+      uri: http://localhost:9101
+      label: main
+  config:
+    import: configserver:http://localhost:9101
