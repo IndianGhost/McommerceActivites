@@ -32,11 +32,11 @@ public class ExpeditionController {
     @PostMapping(EXPEDITION_URI_PREFIX)
     public ResponseEntity<ExpeditionDTO> createExpedition(@RequestBody ExpeditionDTO expeditionDTO) {
         ExpeditionDTO createdExpedition = expeditionService.createExpedition(expeditionDTO);
-        URI location = URI.create(EXPEDITION_URI_PREFIX + "/" + createdExpedition.id());
+        URI location = URI.create(EXPEDITION_URI_PREFIX + "/" + createdExpedition.getId());
         return ResponseEntity.created(location).body(createdExpedition);
     }
 
-    @PutMapping(EXPEDITION_URI_PREFIX+"/{id}")
+    @PutMapping(EXPEDITION_URI_PREFIX + "/{id}")
     public ExpeditionDTO updateExpedition(@PathVariable Long id, @RequestBody ExpeditionDTO expedition) {
         return expeditionService.updateExpedition(id, expedition);
     }

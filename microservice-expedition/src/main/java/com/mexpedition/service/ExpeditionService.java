@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,12 +23,13 @@ public class ExpeditionService {
     }
 
     public List<ExpeditionDTO> getAllExpeditions() {
-        return expeditionRepository.findAll().stream().map(expeditionMapper::fromEntityToDTO).toList();
+        return expeditionRepository.findAll().stream()
+                .map(expeditionMapper::fromEntityToDTO)
+                .collect(Collectors.toList());
     }
 
     public ExpeditionDTO getExpeditionById(Long id) throws ExpeditionNotFound {
-        return expeditionRepository.findById(id)
-                .map(expeditionMapper::fromEntityToDTO)
+        return expeditionRepository.findById(id).map(expeditionMapper::fromEntityToDTO)
                 .orElseThrow(() -> new ExpeditionNotFound("Expedition not found with ID: " + id));
     }
 
@@ -40,8 +42,7 @@ public class ExpeditionService {
 
     @Transactional
     public ExpeditionDTO updateExpedition(Long id, ExpeditionDTO expeditionDTO) throws ExpeditionNotFound {
-        Expedition existingExpedition = expeditionRepository.findById(id)
-                .orElseThrow(() -> new ExpeditionNotFound("Expedition not found with ID: " + id));
+        Expedition existingExpedition = expeditionRepository.findById(id).orElseThrow(() -> new ExpeditionNotFound("Expedition not found with ID: " + id));
 
         // Update existing expedition entity with data from DTO
         Expedition updatedExpedition = expeditionMapper.fromDTOToEntity(expeditionDTO);
