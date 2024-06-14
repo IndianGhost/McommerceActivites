@@ -31,6 +31,12 @@ public class ExpeditionService {
                 .orElseThrow(() -> new ExpeditionNotFound("Expedition not found with ID: " + id));
     }
 
+    public ExpeditionDTO getExpeditionByIdCommande(Integer idCommande) throws ExpeditionNotFound {
+        return expeditionRepository.findByIdCommande(idCommande)
+                .map(expeditionMapper::fromEntityToDTO)
+                .orElseThrow(() -> new ExpeditionNotFound("Expedition not found with command ID: " + idCommande));
+    }
+
     @Transactional
     public ExpeditionDTO createExpedition(ExpeditionDTO expeditionDTO) {
         Expedition expedition = expeditionMapper.fromDTOToEntity(expeditionDTO);
